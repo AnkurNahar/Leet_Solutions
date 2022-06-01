@@ -4,57 +4,13 @@
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
-    if(nums.length == 2){
-        return [0, 1];
-    } else {
-        let i;
-        let evens = [];
-        let odds = [];
-        let targetIsEven = checksAsEven(target);
-        let num0IsEven = checksAsEven(nums[0]);
-        
-        for(i = 1; i < nums.length; i++){ //seperates odd and even, checks all with index 0
-            if(checksAsEven(nums[i])){
-                if(targetIsEven && num0IsEven && matchesWithTarget(target, nums[0], nums[i])){
-                    return [0, i];   
-                } else if(!targetIsEven && !num0IsEven && matchesWithTarget(target, nums[0], nums[i])){
-                    return [0, i]; 
-                }
-                evens.push(i);
-            } else {
-                if(targetIsEven && !num0IsEven && matchesWithTarget(target, nums[0], nums[i])){
-                    return [0, i];   
-                } else if(!targetIsEven && num0IsEven && matchesWithTarget(target, nums[0], nums[i])){
-                    return [0, i]; 
-                }
-                odds.push(i);
+     for(let i=0; i<nums.length; i++){
+         for(let j=i+1; j<nums.length;j++){
+            if(nums[i]+nums[j]===target){
+                return [i,j]
             }
-        } 
-        
-        let j;
-        for(i = 1; i < nums.length; i++){
-            if((checksAsEven(nums[i]) && targetIsEven) || (!checksAsEven(nums[i]) && !targetIsEven)){ // num and target both odd or both even
-                for(j = 0; j < evens.length; j++){
-                    if(i != evens[j] && matchesWithTarget(target, nums[i], nums[evens[j]])){
-                        return [i, evens[j]];
-                    }
-                }
-            } else if((checksAsEven(nums[i]) && !targetIsEven) || (!checksAsEven(nums[i]) && targetIsEven)){ //num even, target odd or vice versa
-                for(j = 0; j < odds.length; j++){
-                    if(i != odds[j] && matchesWithTarget(target, nums[i], nums[odds[j]])){
-                        return [i, odds[j]];
-                    }
-                }
-            }
-        }
-    }
+         }
+     }
+     return [];
 
 };
-
-var checksAsEven = (num) => {
-    return (num % 2 === 0);
-}
-
-var matchesWithTarget = (target, num1, num2)  => {
-    return (target === num1 + num2);
-}
