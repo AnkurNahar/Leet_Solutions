@@ -5,7 +5,7 @@
 var isThree = function(n) {
     let divisor, count = 2;
     for(divisor = 2; divisor < n; divisor++){
-        if(divisor != n && n % divisor === 0){
+        if(n % divisor === 0){
             count++;
         }
     }
