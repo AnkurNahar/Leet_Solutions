@@ -3,46 +3,31 @@
  * @return {number}
  */
 var romanToInt = function(s) {
+    const map = {
+        I: 1,
+        V: 5,
+        X: 10,
+        L: 50,
+        C: 100,
+        D: 500,
+        M: 1000,
+    };
     let num = 0;
-    
-    for(let i = 0; i < s.length; i++){
-        switch(s[i]){
-            case 'I':
-                if(i != s.length - 1 && (s[i+1] == 'V' || s[i+1] == 'X')){
-                    num--;
-                    break;
-                }
-                num++;
-                break;
-            case 'X':
-                if(i != s.length - 1 && (s[i+1] == 'L' || s[i+1] == 'C')){
-                    num-=10;
-                    break;
-                }
-                num+=10;
-                break;
-            case 'C':
-                if(i != s.length - 1 && (s[i+1] == 'D' || s[i+1] == 'M')){
-                    num-=100;
-                    break;
-                }
-                num+=100;;
-                break;
-            case 'V':
-                num += 5;
-                break;
-            case 'L':
-                num += 50;
-                break;
-            case 'D':
-                num += 500;
-                break;
-            case 'M':
-                num += 1000;
-                break;
-            
+    for(let i = 0; i < s.length; i++) {
+        
+        
+        const current = s[i];
+        const next = s[i + 1];
+        const currentVal = map[current];
+        const nextVal = map[next]; 
+        
+        if (!nextVal || currentVal >= nextVal) {
+            num += currentVal;
+        } else {
+            num += (nextVal - currentVal);
+            i++;
         }
     }
+    
     return num;
-
 };
